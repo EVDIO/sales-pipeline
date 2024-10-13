@@ -23,12 +23,15 @@ This repository contains a data pipeline project built using the Snowflake TPCH 
 ## Key Features
 
 - Snowflake TPCH Dataset: The dataset used is from Snowflake's TPCH sample data, which simulates a transactional database.
+  
       -dbt Transformations:
+  
        - Staging & Source Models: Organized raw data into structured, consumable formats.
        - Fact Tables: Aggregated transactional data for analytics.
        - Data Marts: Created business-friendly tables for reporting.
        - Custom Macros: Utilized dbt macros for reusable SQL transformations.
        - Testing: Implemented dbt’s generic and singular tests to validate the data models and ensure data quality.
+  
     -Airflow Orchestration: Used the Astro library with Airflow to orchestrate the data pipeline, ensuring automated and scheduled runs.
 
 ## Prerequisites
