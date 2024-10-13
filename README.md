@@ -18,7 +18,7 @@ This repository contains a data pipeline project built using the Snowflake TPCH 
 │   ├── tests/               # dbt tests (generic and singular)
 │   └── dbt_project.yml      # dbt project configuration
 └── README.md                # Project documentation
-
+```
 
 ## Key Features
 
@@ -39,27 +39,67 @@ This repository contains a data pipeline project built using the Snowflake TPCH 
 
 ```bash
 pip install dbt-snowflake
-
+```
 - Airflow: Install Astro library for orchestration.
 
 ```bash
 brew install astro
-
-## Step 1: Configure Snowflake
+```   
+## How to RUN  
+### Step 1: Configure Snowflake
 
 Ensure you have your Snowflake credentials set up in your environment. You'll need:
 
-    -Snowflake account name
-    -User
-    -Role
-    -Warehouse
-    -Database
-    -Schema
+```bash
+-- create accounts
+use role accountadmin;
 
-Step 2: Set Up dbt
+create warehouse dbt_wh with warehouse_size='x-small';
+create database if not exists dbt_db;
+create role if not exists dbt_role;
 
-    Navigate to the dbt_sales/ directory.
+show grants on warehouse dbt_wh;
+
+grant role dbt_role to user jayzern;
+grant usage on warehouse dbt_wh to role dbt_role;
+grant all on database dbt_db to role dbt_role;
+
+use role dbt_role;
+
+create schema if not exists dbt_db.dbt_schema;
+
+-- clean up
+use role accountadmin;
+
+drop warehouse if exists dbt_wh;
+drop database if exists dbt_db;
+drop role if exists dbt_role;
+```
+
+### Step 2: Set Up dbt
+
+    Navigate to the dbt-sales/ directory.
 
     Update the profiles.yml file with your Snowflake credentials.
 
     Run the dbt models:
+    
+```bash
+dbt run
+```
+
+## Testing
+
+dbt includes both generic and singular tests. To run the tests:
+
+```bash
+dbt tests
+```
+
+## Future Enhancements
+- Add more advanced dbt transformations and macros.
+- Introduce additional data sources.
+- Scale the orchestration with more complex DAGs in Airflow.
+
+## License
+This project is licensed under the MIT License.
